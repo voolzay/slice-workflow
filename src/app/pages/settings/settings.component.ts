@@ -1,4 +1,4 @@
-import { Component, signal} from '@angular/core';
+import { Component} from '@angular/core';
 
 @Component({
   selector: 'app-settings',
@@ -6,5 +6,5 @@ import { Component, signal} from '@angular/core';
   styleUrl: './settings.component.scss'
 })
 export class SettingsComponent {
-  title = signal('My first angular app');
+  title = 'My first angular app';
 }

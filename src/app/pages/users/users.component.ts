@@ -7,7 +7,8 @@ interface User {
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html'
+  templateUrl: './users.component.html',
+  styleUrl: './users.component.scss'
 })
 export class UsersComponent {
 
