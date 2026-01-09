@@ -33,7 +33,32 @@ export class UsersComponent {
     this.newUserAge = null;
   }
 
-  removeUser(index: number) {
-    this.users.splice(index, 1);
+
+  searchName: string = '';
+  searchAge: number | null = null;
+
+   get filteredUsers() {
+    return this.users.filter(user => {
+      const byName = this.searchName
+        ? user.name.toLowerCase().includes(this.searchName.toLowerCase())
+        : true;
+
+      const byAge = this.searchAge !== null
+        ? user.age === this.searchAge
+        : true;
+
+      return byName && byAge;
+    });
   }
+
+  removeUser(userToRemove: any) {
+    this.users = this.users.filter(user => user !== userToRemove);
+  }
+
+
 }
+
+   
+
+  
+
