@@ -24,9 +24,29 @@
 
 
 <ul>
-  <li *ngFor="let user of users; index as i">
+  <li *ngFor="let user of filteredUsers; index as i">
     {{ i + 1 }}. {{ user.name }} — {{ user.age }} years
-    <button (click)="removeUser(i)">Remove</button>
+    <button (click)="removeUser(user)">Remove</button>
   </li>
 </ul>
+
+
+<div class="search-filters">
+  <input
+    type="text"
+    placeholder="Search by name"
+    name="name"
+    [(ngModel)]="searchName"
+  />
+
+  <input
+    type="number"
+    placeholder="Search by age"
+    name="age"
+    [(ngModel)]="searchAge"
+  />
+</div>
+
+
+
 
