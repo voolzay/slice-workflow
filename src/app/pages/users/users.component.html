@@ -1,5 +1,11 @@
 <h2>Users</h2>
-
+<input
+  type="text"
+  placeholder="Search by name or age"
+  [(ngModel)]="searchText"
+  
+/>
+<p>{{ searchText }}</p>
 <input
   type="text"
   placeholder="Name"
@@ -13,6 +19,9 @@
 />
 
 <button (click)="addUser()">Add user</button>
+
+
+
 
 <ul>
   <li *ngFor="let user of filteredUsers; index as i">

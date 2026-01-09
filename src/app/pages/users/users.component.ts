@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-
-interface User {
-  name: string;
-  age: number;
-}
+import { UsersModule } from './users.module';
 
 @Component({
   selector: 'app-users',
@@ -17,12 +13,27 @@ export class UsersComponent {
     { name: 'Maria', age: 30 }
   ];
 
+  searchText = '';
+
+  get filteredUsers(): User[] {
+    if (!this.searchText.trim()) {
+      return this.users;
+    }
+
+    const text = this.searchText.toLowerCase();
+
+    return this.users.filter(user =>
+      user.name.toLowerCase().includes(text) ||
+      user.age.toString().includes(text)
+    );
+  }
+
   newUserName = '';
   newUserAge: number | null = null;
 
   addUser() {
     if (!this.newUserName.trim()) return;
-    if (this.newUserAge === null || this.newUserAge <= 0) return;
+    if (!this.newUserAge || this.newUserAge <= 0) return;
 
     this.users.push({
       name: this.newUserName,
