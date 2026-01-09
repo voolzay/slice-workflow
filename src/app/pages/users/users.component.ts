@@ -1,10 +1,19 @@
 import { Component } from '@angular/core';
-import { UsersModule } from './users.module';
+import { FormsModule } from '@angular/forms';
+import { ButtonModule } from 'primeng/button';
+import { CommonModule } from '@angular/common';
+
+interface User {
+  name: string;
+  age: number;
+}
 
 @Component({
   selector: 'app-users',
+  standalone: true,
+  imports: [CommonModule, FormsModule, ButtonModule],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.scss'
+  styleUrls: ['./users.component.scss']
 })
 export class UsersComponent {
 
@@ -13,23 +22,25 @@ export class UsersComponent {
     { name: 'Maria', age: 30 }
   ];
 
-  searchText = '';
-
-  get filteredUsers(): User[] {
-    if (!this.searchText.trim()) {
-      return this.users;
-    }
-
-    const text = this.searchText.toLowerCase();
-
-    return this.users.filter(user =>
-      user.name.toLowerCase().includes(text) ||
-      user.age.toString().includes(text)
-    );
-  }
-
   newUserName = '';
   newUserAge: number | null = null;
+
+  searchName = '';
+  searchAge: number | null = null;
+
+  get filteredUsers(): User[] {
+    return this.users.filter(user => {
+      const byName = this.searchName
+        ? user.name.toLowerCase().includes(this.searchName.toLowerCase())
+        : true;
+
+      const byAge = this.searchAge !== null
+        ? user.age === this.searchAge
+        : true;
+
+      return byName && byAge;
+    });
+  }
 
   addUser() {
     if (!this.newUserName.trim()) return;
@@ -44,32 +55,7 @@ export class UsersComponent {
     this.newUserAge = null;
   }
 
-
-  searchName: string = '';
-  searchAge: number | null = null;
-
-   get filteredUsers() {
-    return this.users.filter(user => {
-      const byName = this.searchName
-        ? user.name.toLowerCase().includes(this.searchName.toLowerCase())
-        : true;
-
-      const byAge = this.searchAge !== null
-        ? user.age === this.searchAge
-        : true;
-
-      return byName && byAge;
-    });
-  }
-
-  removeUser(userToRemove: any) {
+  removeUser(userToRemove: User) {
     this.users = this.users.filter(user => user !== userToRemove);
   }
-
-
 }
-
-   
-
-  
-

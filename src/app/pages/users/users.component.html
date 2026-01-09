@@ -1,27 +1,17 @@
 <h2>Users</h2>
-<input
-  type="text"
-  placeholder="Search by name or age"
-  [(ngModel)]="searchText"
-  
-/>
-<p>{{ searchText }}</p>
-<input
-  type="text"
-  placeholder="Name"
-  [(ngModel)]="newUserName"
-/>
 
-<input
-  type="number"
-  placeholder="Age"
-  [(ngModel)]="newUserAge"
-/>
+<input type="text" placeholder="Name" [(ngModel)]="newUserName" />
+<input type="number" placeholder="Age" [(ngModel)]="newUserAge" />
 
 <button (click)="addUser()">Add user</button>
-
-
-
+<button 
+  pButton 
+  type="button" 
+  label="Salvar" 
+  icon="pi pi-check"
+  pButton label="Perigo" 
+  severity="danger">
+</button>
 
 <ul>
   <li *ngFor="let user of filteredUsers; index as i">
@@ -30,23 +20,25 @@
   </li>
 </ul>
 
-
 <div class="search-filters">
   <input
     type="text"
     placeholder="Search by name"
-    name="name"
     [(ngModel)]="searchName"
   />
 
   <input
     type="number"
     placeholder="Search by age"
-    name="age"
     [(ngModel)]="searchAge"
   />
 </div>
+<p-button 
+  label="Custom" 
+  severity="success" 
+  styleClass="btn-custom">
+</p-button>
 
-
-
-
+<div class="card flex justify-content-center">
+  <p-button label="Submit"></p-button>
+</div>
