@@ -1,25 +1,20 @@
 <div>
-  <p style="background-color: red;">
-    HEADER
-  </p>
+  <p style="background-color: rgb(255, 255, 255);">
+    <div class="home-buttons" >
+    <button routerLink="/" class="home-buttons">Home</button>
+  <button routerLink="/settings" class="home-buttons">Settings</button>
+  <button routerLink="/users" class="home-buttons" >users</button>
+  
+  
+<div class="content">
+  <div class="home-buttons" >
   
 
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/81/TempleOS_logo.png" width="120px" >
-</div>
-<div class="content">
+    
+
   <router-outlet></router-outlet>
 </div>
 
-<button routerLink="/settings">
-  Settings
-</button>
 
-<button routerLink="/users">
-  Users
-</button>
-
-<button routerLink="/">
-  Home
-</button>
 
 

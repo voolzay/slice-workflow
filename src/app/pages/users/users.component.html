@@ -1,32 +1,45 @@
-<h2>Users</h2>
-<input
-  type="text"
-  placeholder="Search by name or age"
-  [(ngModel)]="searchText"
-  
-/>
-<p>{{ searchText }}</p>
-<input
-  type="text"
-  placeholder="Name"
-  [(ngModel)]="newUserName"
-/>
-
-<input
-  type="number"
-  placeholder="Age"
-  [(ngModel)]="newUserAge"
-/>
-
-<button (click)="addUser()">Add user</button>
+<h2 class="users">Users</h2>
 
 
+<input class="form-control" type="text" placeholder="Name" [(ngModel)]="newUserName" />
+<input class="form-control" type="number" placeholder="Age" [(ngModel)]="newUserAge" />
+
+<button 
+(click)="addUser()"
+  pButton 
+  label="Add user" 
+  icon="pi pi-check"
+  class="btn-animated">
+</button>
 
 
 <ul>
-  <li *ngFor="let user of users; index as i">
-    {{ i + 1 }}. {{ user.name }} — {{ user.age }} years
-    <button (click)="removeUser(i)">Remove</button>
+  <li *ngFor="let user of filteredUsers; index as i">
+    <span class="user-box user-text" >
+    
+      {{ i + 1 }}. {{ user.name }} — {{ user.age }} years
+    </span>
+    <button 
+      (click)="removeUser(user)"pButton 
+      label="Remove" 
+      icon="pi pi-check"
+      class="btn-animated">
+    </button>
   </li>
 </ul>
+
+<div class="search-filters">
+  <input
+    class="search-by-name"
+    placeholder="Search by name"
+    [(ngModel)]="searchName"
+  />
+
+  <input 
+    class="search-by-age"
+    placeholder="Search by age"
+    [(ngModel)]="searchAge"
+  />
+</div>
+
 
