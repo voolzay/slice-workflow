@@ -12,9 +12,12 @@ import { UsersRoutingModule } from './users-routing.module';
     CommonModule,
     FormsModule,
     ButtonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
   ]
 })
-export class UsersModule {}
+export class UsersModule {
+ 
+}
+
 
 

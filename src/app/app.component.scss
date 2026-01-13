@@ -1,4 +1,30 @@
 .content {
-    background-color: blue;
-    color: white;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    border: none !important;
+    color: #fff !important;
+    margin-top: 10px;
+    padding: 6px 12px;
 }
+
+.home-buttons {
+  margin-top: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  border: none !important;
+  color: #fff !important;
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+}
+
+.home-buttons:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
+}
+
+.home-buttons:active {
+  transform: scale(0.97);
+}
+

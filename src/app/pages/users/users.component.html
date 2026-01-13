@@ -1,24 +1,135 @@
-<h2>Users</h2>
+<!-- ================================================= -->
+<!-- # TÍTULO -->
+<!-- ================================================= -->
+<h2 class="users">Users</h2>
 
-<input type="text" placeholder="Name" [(ngModel)]="newUserName" />
-<input type="number" placeholder="Age" [(ngModel)]="newUserAge" />
+<!-- ================================================= -->
+<!-- # ADICIONAR USUÁRIO -->
+<!-- ================================================= -->
+<input
+  class="form-control"
+  type="text"
+  placeholder="Name"
+  [(ngModel)]="newUserName"
+/>
 
-<button (click)="addUser()">Add user</button>
-<button 
-  pButton 
-  type="button" 
-  label="Salvar" 
+<input
+  class="form-control"
+  type="number"
+  placeholder="Age"
+  [(ngModel)]="newUserAge"
+/>
+
+<button
+  type="button"
+  pButton
+  label="Add user"
   icon="pi pi-check"
-  pButton label="Perigo" 
-  severity="danger">
+  class="btn-animated"
+  (click)="addUser()">
 </button>
 
-<ul>
-  <li *ngFor="let user of filteredUsers; index as i">
-    {{ i + 1 }}. {{ user.name }} — {{ user.age }} years
-    <button (click)="removeUser(user)">Remove</button>
-  </li>
-</ul>
+<!-- ================================================= -->
+<!-- # FILTROS DE PESQUISA -->
+<!-- ================================================= -->
+<div class="search-filters">
+  <input
+    class="search-by-name"
+    type="text"
+    placeholder="Search by name"
+    [(ngModel)]="searchName"
+  />
+
+  <input
+    class="search-by-age"
+    type="number"
+    placeholder="Search by age"
+    [(ngModel)]="searchAge"
+  />
+</div>
+
+<!-- ================================================= -->
+<!-- # TABELA DE USUÁRIOS -->
+<!-- ================================================= -->
+<p-table
+  class="users-table"
+  [value]="filteredUsers"
+  *ngIf="filteredUsers.length > 0; else noResultsTable">
+
+  <!-- ---------- CABEÇALHO ---------- -->
+  <ng-template pTemplate="header">
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Age</th>
+      <th>Actions</th>
+    </tr>
+  </ng-template>
+
+  <!-- ---------- LINHA (1 usuário) ---------- -->
+  <!-- IMPORTANTE: p-table JÁ FAZ O LOOP -->
+  <ng-template pTemplate="body" let-user let-i="rowIndex">
+    <tr>
+      <td>{{ i + 1 }}</td>
+
+      <td>
+        <span class="user-box user-text">
+          {{ user.name }}
+        </span>
+      </td>
+
+      <td>{{ user.age }}</td>
+
+      <td>
+        <!-- BOTÃO REMOVER (com confirmação) -->
+        <button
+          type="button"
+          pButton
+          label="Remove"
+          icon="pi pi-trash"
+          class="btn-animated"
+          (click)="confirmRemoveUser($event, user)">
+        </button>
+      </td>
+    </tr>
+  </ng-template>
+
+</p-table>
+
+<!-- ================================================= -->
+<!-- # MENSAGEM: NENHUM RESULTADO -->
+<!-- ================================================= -->
+<ng-template #noResultsTable>
+  <p style="opacity: 0.6;">Nothing found.</p>
+</ng-template>
+
+<!-- ================================================= -->
+<!-- # TOAST (mensagens) -->
+<!-- ================================================= -->
+<p-toast></p-toast>
+
+<!-- ================================================= -->
+<!-- # CONFIRM DIALOG (global) -->
+<!-- ================================================= -->
+<p-confirmDialog>
+  <ng-template #message let-message>
+    <div class="dialog-message">
+    
+      <i
+        [ngClass]="message.icon"
+        
+        class="!text-6xl text-red-500">
+      </i>
+
+      <p>{{ message.message }}</p>
+    </div>
+
+
+
+    
+  </ng-template>
+</p-confirmDialog>
+
 
 <div class="search-filters">
   <input
