@@ -131,3 +131,25 @@
 </p-confirmDialog>
 
 
+<div class="search-filters">
+  <input
+    type="text"
+    placeholder="Search by name"
+    [(ngModel)]="searchName"
+  />
+
+  <input
+    type="number"
+    placeholder="Search by age"
+    [(ngModel)]="searchAge"
+  />
+</div>
+<p-button 
+  label="Custom" 
+  severity="success" 
+  styleClass="btn-custom">
+</p-button>
+
+<div class="card flex justify-content-center">
+  <p-button label="Submit"></p-button>
+</div>
