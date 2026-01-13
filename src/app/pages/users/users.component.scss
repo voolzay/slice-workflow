@@ -44,7 +44,7 @@ p-button {
   color: #fff !important;
 }
 .btn-animated {
-  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  background: linear-gradient(135deg, #63e0f19a, #8b5cf6) !important;
   border: none !important;
   color: white !important;
   transition: all 0.3s ease;
@@ -95,4 +95,13 @@ p-button {
   margin-top: 15px;
   color: #ffffff;
 }
+
+.dialog-message {
+  color: #ff0000;
+  font-size: 25px;
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
+  background-color: rgba(235, 91, 227, 0.658);
+  
+}
+
 

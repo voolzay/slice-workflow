@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+.btn-accept-custom {
+  background-color:rgba(41, 3, 255, 0.658);
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.btn-reject-custom {
+  background-color:rgba(235, 91, 227, 0.658);
+  border: none;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
