@@ -9,6 +9,10 @@ const routes: Routes = [
   { 
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then(m => m.SettingsModule)
+  },
+  {
+    path: 'tickets',
+    loadChildren: () => import('./pages/tickets/tickets.module').then(m => m.TicketsModule)
   }
 ];
 
@@ -17,3 +21,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

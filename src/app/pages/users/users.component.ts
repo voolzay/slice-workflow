@@ -1,10 +1,11 @@
 // =================================================
 // # IMPORTS ANGULAR
 // =================================================
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
+
 // =================================================
 // # IMPORTS PRIMENG
 // =================================================
@@ -27,11 +28,8 @@ interface User {
 // # COMPONENT
 // =================================================
 @Component({
-  selector: 'app-users dialog-basic-demo',
-  
+  selector: 'app-users-dialog-basic-demo',
   standalone: true,
-
-  // ---------- módulos usados neste componente ----------
   imports: [
     CommonModule,
     FormsModule,
@@ -41,18 +39,15 @@ interface User {
     ToastModule,
     InputTextModule,
     DialogModule,
-    DialogModule,
   ],
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
-
-  // ---------- serviços do PrimeNG ----------
   providers: [ConfirmationService, MessageService]
 })
-// =================================================
-// # DIALOG
-// =================================================
-export class UsersComponent {
+export class UsersComponent implements OnInit {
+  // =================================================
+  // # DIALOG
+  // =================================================
   visible: boolean = false;
 
   showDialog() {
@@ -60,24 +55,24 @@ export class UsersComponent {
     this.newUserAge = null;
     this.visible = true;
   }
+
   // =================================================
   // # DADOS
   // =================================================
-  users: User[] = [
-    { name: 'João', age: 25 },
-    { name: 'Maria', age: 30 }
+  users: User[] = [];
 
-  ];
   // =================================================
   // # FORMULÁRIO (ADICIONAR USUÁRIO)
   // =================================================
   newUserName = '';
   newUserAge: number | null = null;
+
   // =================================================
   // # FILTROS DE PESQUISA
   // =================================================
   searchName = '';
   searchAge: number | null = null;
+
   // =================================================
   // # CONSTRUTOR (SERVIÇOS)
   // =================================================
@@ -85,8 +80,19 @@ export class UsersComponent {
     private confirmationService: ConfirmationService,
     private messageService: MessageService
   ) {}
+
   // =================================================
-  // # USUÁRIOS FILTRADOS (nome + idade)
+  // # CARREGAR DADOS DO localStorage
+  // =================================================
+  ngOnInit() {
+    const savedUsers = localStorage.getItem('users');
+    if (savedUsers) {
+      this.users = JSON.parse(savedUsers);
+    }
+  }
+
+  // =================================================
+  // # FILTRO DE USUÁRIOS
   // =================================================
   get filteredUsers(): User[] {
     return this.users.filter(user => {
@@ -97,25 +103,39 @@ export class UsersComponent {
       const byAge = this.searchAge !== null
         ? user.age === this.searchAge
         : true;
+
       return byName && byAge;
     });
   }
+
   // =================================================
   // # ADICIONAR USUÁRIO
   // =================================================
   addUser() {
     if (!this.newUserName.trim()) return;
     if (!this.newUserAge || this.newUserAge <= 0) return;
+
     this.users.push({
       name: this.newUserName,
       age: this.newUserAge
     });
+
+    this.saveUsersToStorage();
+
     // limpar campos
     this.newUserName = '';
     this.newUserAge = null;
+    this.visible = false;
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Sucesso',
+      detail: 'Usuário adicionado!'
+    });
   }
+
   // =================================================
-  // # CONFIRMAR REMOÇÃO DE USUÁRIO
+  // # REMOVER USUÁRIO
   // =================================================
   confirmRemoveUser(event: Event, user: User) {
     this.confirmationService.confirm({
@@ -125,51 +145,56 @@ export class UsersComponent {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Sim',
       rejectLabel: 'Cancelar',
-      // ---------- ação ao confirmar ----------
       accept: () => {
         this.users = this.users.filter(u => u !== user);
+        this.saveUsersToStorage();
 
         this.messageService.add({
-          
           severity: 'success',
           summary: 'Removido',
-          detail: 'Usuário apagado com sucesso' 
-        });    
-        
-        
+          detail: 'Usuário apagado com sucesso'
+        });
       }
-      
     });
-    
   }
-      
-// Variáveis para controlar a edição e dialog
-userToEdit: any = null;
-editDialogVisible: boolean = false;
-editUserName: string = '';
-editUserAge: number | null = null;
 
-// Função para abrir o diálogo e preencher os campos
-editarUtilizador(user: any) {
-  this.userToEdit = user;
-  this.editUserName = user.name;
-  this.editUserAge = user.age;
-  this.editDialogVisible = true;
+  // =================================================
+  // # EDITAR USUÁRIO
+  // =================================================
+  userToEdit: User | null = null;
+  editDialogVisible: boolean = false;
+  editUserName: string = '';
+  editUserAge: number | null = null;
+
+  editarUtilizador(user: User) {
+    this.userToEdit = user;
+    this.editUserName = user.name;
+    this.editUserAge = user.age;
+    this.editDialogVisible = true;
+  }
+
+  guardarEdicao() {
+    if (!this.userToEdit) return;
+
+    this.userToEdit.name = this.editUserName;
+    this.userToEdit.age = this.editUserAge!;
+
+    this.saveUsersToStorage();
+
+    this.editDialogVisible = false;
+    this.userToEdit = null;
+
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Atualizado',
+      detail: 'Usuário editado com sucesso'
+    });
+  }
+
+  // =================================================
+  // # LOCAL STORAGE
+  // =================================================
+  saveUsersToStorage() {
+    localStorage.setItem('users', JSON.stringify(this.users));
+  }
 }
-
-// Função para guardar as alterações
-guardarEdicao() {
-  if (!this.userToEdit) return;
-
-  this.userToEdit.name = this.editUserName;
-  this.userToEdit.age = this.editUserAge;
-
-  this.editDialogVisible = false;
-  this.userToEdit = null;
-
-  // Opcional: Se tiveres função para atualizar filtros ou lista, chama aqui
-  // this.atualizarListaUsuarios();
-}
-
-}
-
