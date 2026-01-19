@@ -1,0 +1,63 @@
+<div class="button-wrapper">
+  <button 
+    type="button"
+    pButton
+    label="Criar lista"
+    icon="pi pi-user-plus"
+    class="btn-animated special-button"
+    (click)="showdialog()">
+  </button>
+</div>
+
+<p-dialog header="Criar nova lista" [(visible)]="visible" [modal]="true" [closable]="false" [style]="{width: '25vw'}">
+  <div class="p-fluid">
+
+    <div class="p-field">
+      <input id="listname"
+             type="text" 
+             pInputText
+             placeholder="Nome da Lista"
+             [(ngModel)]="newlistname"
+             class="input-list-name" />
+    </div>
+
+    <div class="p-field">
+      <input id="listdesc"
+             type="text" 
+             pInputText
+             placeholder="Descrição da Lista"
+             [(ngModel)]="newlistdescription"
+             class="input-list-desc" />
+    </div>
+
+    <div class="p-field">
+      <input id="prod"
+             type="text" 
+             pInputText
+             placeholder="Nome do Produto"
+             [(ngModel)]="newlistprod"
+             class="input-list-prod" />
+    </div>
+<div class="dialog-buttons">
+    <p-button label="Cancel" severity="secondary" (onClick)="visible = false"></p-button>
+    <p-button label="Save" (onClick)="addlist()"></p-button>
+  </div>
+  </div>
+</p-dialog>
+~
+
+
+<p-table [value]="lists" *ngIf="lists.length">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nome da Lista</th>
+    </tr>
+  </ng-template>
+
+  <ng-template pTemplate="body" let-list>
+    <tr>
+      <td>{{ list.name }}</td>
+    </tr>
+  </ng-template>
+</p-table>
+

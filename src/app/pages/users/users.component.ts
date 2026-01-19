@@ -13,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ToastModule } from 'primeng/toast';
-import { DialogModule } from 'primeng/dialog';
+import { DialogModule }  from 'primeng/dialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 // =================================================

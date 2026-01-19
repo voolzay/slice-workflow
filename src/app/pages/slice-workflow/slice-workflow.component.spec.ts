@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TicketsComponent } from './tickets.component';
+import { SliceWorkflowComponent } from './slice-workflow.component';
 
-describe('TicketsComponent', () => {
-  let component: TicketsComponent;
-  let fixture: ComponentFixture<TicketsComponent>;
+describe('SliceWorkflowComponent', () => {
+  let component: SliceWorkflowComponent;
+  let fixture: ComponentFixture<SliceWorkflowComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TicketsComponent]
+      declarations: [SliceWorkflowComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TicketsComponent);
+    fixture = TestBed.createComponent(SliceWorkflowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
