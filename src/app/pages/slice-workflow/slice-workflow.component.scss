@@ -1,0 +1,47 @@
+
+
+.button-wrapper { 
+    width: 100%;
+    display: flex;  
+    justify-content: bottom-right;  
+    margin-bottom: 2rem;
+}
+
+.input-list-prod {
+    width: 80%;
+    margin-bottom: 1rem;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  gap: 1rem;
+}
+
+.input-list-name {
+width: 80%;
+    margin-bottom: 1rem;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  gap: 1rem;
+  
+}
+
+.input-list-desc {
+width: 80%;
+    margin-bottom: 1rem;
+  padding: 6px 12px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  gap: 1rem;
+  
+}
+
+.dialog-buttons {
+  width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
