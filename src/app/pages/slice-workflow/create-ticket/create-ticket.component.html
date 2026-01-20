@@ -1,0 +1,7 @@
+<div class="p-field">
+    <input pInputText placeholder="Título do Ticket" [(ngModel)]="newTicket.Title" />
+</div>
+<div class="dialog-buttons">
+    <p-button label="Cancel"></p-button>
+    <p-button label="Save" (onClick)="createTicket()"></p-button>
+</div>
