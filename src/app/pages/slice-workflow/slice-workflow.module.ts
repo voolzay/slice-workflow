@@ -9,13 +9,20 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from "primeng/toast";        // 👈 ОБЯЗАТЕЛЬНО
-import { InputTextModule } from 'primeng/inputtext';   // 👈 для pInputText
+import { InputTextModule } from 'primeng/inputtext';
+import { CreateTicketComponent } from './create-ticket/create-ticket.component';
+import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
+import { ListMembersComponent } from './list-members/list-members.component';   // 👈 для pInputText
+
 
 
 
 @NgModule({
   declarations: [
-    SliceWorkflowComponent
+    SliceWorkflowComponent,
+    CreateTicketComponent,
+    EditTicketComponent,
+    ListMembersComponent
   ],
   imports: [
     CommonModule,
