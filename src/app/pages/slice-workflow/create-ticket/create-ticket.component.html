@@ -5,3 +5,20 @@
     <p-button label="Cancel"></p-button>
     <p-button label="Save" (onClick)="createTicket()"></p-button>
 </div>
+
+<p-dialog
+  [(visible)]="ticketDialogvisible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{width: '20vw'}">
+  <div class="p-fluid">
+     <div class="p-field">
+      <input pInputText placeholder="Nome do Ticket" [(ngModel)]="newticketname" />
+    </div>
+    <div class="dialog-buttons">
+      <p-button label="Cancel" (onClick)="ticketDialogvisible=false"></p-button>
+      <p-button label="Save" (onClick)="createTicket()"></p-button>
+    </div> 
+    
+  </div>
+</p-dialog>
