@@ -1,0 +1,85 @@
+
+
+.button-wrapper { 
+    width: 100%;
+    display: flex;  
+    justify-content: bottom-right;  
+    margin-bottom: 2rem;
+}
+
+
+
+.dialog-buttons {
+  width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    gap: 1rem;
+}
+
+.addticket {
+    display: flex;
+    align-items: right;
+    justify-content: right;
+    
+    
+}
+
+.list-container{
+  background-color: rgba(119, 122, 122, 0.089);
+  color: black;   
+  padding: 0.25rem 0.5rem; /* меньше отступы */
+  font-size: 0.9rem;      /* меньше текст */
+  width: 60%;
+  margin: 10px auto;
+  
+}
+
+
+.p-mb-3 {
+    background-color: rgba(190, 190, 190, 0.089);
+    color: black;
+    display: flex;
+}
+
+.titlist{
+  margin-left: 20px;
+  margin-top: 5px;
+}
+
+.tiny-btn {
+  padding: 0.30rem;
+  font-size: 1rem;
+  text-align: right;
+  width: 28px;
+  height: 28px;
+}
+
+
+
+:host ::ng-deep .small-dropdown .p-dropdown-panel {
+  margin-top: 1px; }
+
+  .inputlist{
+      padding: 6px 12px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  border-radius: 10px;
+  margin-top: 5px;
+  }
+
+.list-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.list-title {
+  margin: 0;
+}
+
+.list-description {
+  margin-left: auto;   /* ❗ прижимает к правому краю */
+  color: #5f5f5fc7;
+  font-size: 0.9rem;
+  white-space: nowrap; /* чтобы не переносилось */
+}

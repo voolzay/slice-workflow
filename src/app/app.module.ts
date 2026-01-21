@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,8 @@ imports: [
   AppRoutingModule,
   FormsModule,
   BrowserAnimationsModule,
-  DialogModule
+  DialogModule,
+  ButtonModule
 ],
   bootstrap: [AppComponent]
 })

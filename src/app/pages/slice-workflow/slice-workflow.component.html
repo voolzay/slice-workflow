@@ -1,0 +1,107 @@
+<div class="button-wrapper">
+  <button 
+    type="button"
+    pButton
+    label="Criar lista"
+    icon="pi pi-user-plus"
+    class="btn-animated special-button"
+    (click)="showdialog()">
+  </button>
+
+  
+</div>
+
+<!-- Диалог создания нового списка -->
+<p-dialog header="Criar nova lista" [(visible)]="listDialogvisible"
+ [modal]="true"
+ [closable]="false"
+ [style]="{width: '25vw'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <input class="inputlist" pInputText placeholder="Nome da Lista" [(ngModel)]="newlistname" />
+      <input class="inputlist" pInputText placeholder="Descrição da Lista" [(ngModel)]="NewListDescription" />
+      <p-dropdown class = ""
+        [options]="products" 
+        [(ngModel)]="selectedProduct" 
+        appendTo="body"
+        placeholder="Select a product" 
+        [editable]="false" 
+        optionLabel="name" 
+        size ="small"/>
+    </div>
+    <div class="dialog-buttons">
+      <p-button label="Cancel" severity="secondary" (onClick)="listDialogvisible=false"></p-button>
+      <p-button label="Save" (onClick)="addlist()"></p-button>
+    </div>
+  </div>
+</p-dialog>
+
+<!-- Список таблиц -->
+<div *ngFor="let list of list" class="list-container">
+<div class="list-header">
+  <h3 class="list-title">{{ list.name }}</h3>
+  <span class="list-description">{{ list.description }}</span>
+</div>
+
+
+
+  
+
+  <!-- Кнопка добавить тикет -->
+  <button pButton icon="pi pi-plus" class="p-button-sm" label="+"
+    (click)="showdialogticket(list)"></button>
+
+  <!-- tabela dos tickets -->
+
+  <p-table 
+  dragdrop="true" 
+  listStyle="height:auto" 
+  [responsive]="true"
+  [value]="list.tickets"
+   *ngIf="list.tickets.length > 0" 
+   class="p-mt-2">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Ticket</th>
+        <th>Status</th>
+        
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-ticket>
+      <tr>
+        <td>{{ ticket.name }}</td>
+        <div class="card flex justify-content-center">
+        <p-dropdown
+        [options]="cities" 
+        [(ngModel)]="selectedCity" 
+        appendTo="body"
+        placeholder="Select a City" 
+        [editable]="false" 
+        optionLabel="name" 
+        size ="small"/>
+</div>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+
+<!-- Диалог создания нового тикета -->
+
+<p-dialog header="Criar novo ticket"  
+
+  [(visible)]="ticketDialogvisible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{width: '20vw'}">
+  <div class="p-fluid">
+    <!-- <div class="p-field">
+      <input pInputText placeholder="Nome do Ticket" [(ngModel)]="newticketname" />
+    </div>
+    <div class="dialog-buttons">
+      <p-button label="Cancel" (onClick)="ticketDialogvisible=false"></p-button>
+      <p-button label="Save" (onClick)="addticket()"></p-button>
+    </div> -->
+    <app-create-ticket (notify)="receiveTicketCreated($event)"></app-create-ticket>
+  </div>
+</p-dialog>
