@@ -4,7 +4,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { OrderListModule } from 'primeng/orderlist';
 import { WorkflowList } from '../../models/workflow-list.model';
 import { WorkflowTicket } from '../../models/workflow-ticket.model';
-import { WorkflowService } from '../../services/workflow-service.service';
+import { WorkflowService } from '../../services/workflow.service';
 
 
 @Component({
@@ -101,13 +101,11 @@ addticket(){
 
 receiveTicketCreated(ticket: WorkflowTicket)
 {
-    ticket.Id = 1000;
-    alert("Ticket criado com ID " + ticket.Id + " e com o titulo " + ticket.Title);
+    ticket.id = 1000;
+    alert("Ticket criado com ID " + ticket.id + " e com o titulo " + ticket.title);
 }
 
-teste() {
-  this.workflowService.chamaIstoNikita("abc");
-}
+
 
 }
 
