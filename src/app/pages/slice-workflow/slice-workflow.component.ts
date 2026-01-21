@@ -73,7 +73,7 @@ addlist(){
   list.description = this.NewListDescription;
   list.ProdutoId = this.NewListProd;
 
-  this.workflowService.createList(list);
+  this.workflowService.setList('workflowLists', [list]);
 
 
   this.list.push({
@@ -112,7 +112,7 @@ createticket(){
 receiveTicketCreated(ticket: WorkflowTicket)
 {
     ticket.id = 1000;
-    alert("Ticket criado com ID " + ticket.id + " e com o titulo " + ticket.title);
+    alert("Ticket criado com ID " + ticket.id + " e com o titulo " + ticket.Title);
 }
 
 
