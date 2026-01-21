@@ -29,7 +29,7 @@ selectedlist: any = null;
 list: {
 name: string;
 description: string;
-product:string;
+ProdutoId :string;
 tickets:any[];
 }[] = [];
 
@@ -66,10 +66,20 @@ showdialog() {
 
 addlist(){
   if (!this.newlistname.trim()) return;
+
+  // enviar dados ao mike
+  let list = {} as WorkflowList;
+  list.name = this.newlistname.trim();
+  list.description = this.NewListDescription;
+  list.ProdutoId = this.NewListProd;
+
+  this.workflowService.createList(list);
+
+
   this.list.push({
     name: this.newlistname.trim(),
     description: this.NewListDescription,
-    product: this.NewListProd,
+    ProdutoId: this.NewListProd,
     tickets: [],
   });
   
@@ -84,7 +94,7 @@ showdialogticket(list : any){
   this.ticketDialogvisible = true;
 }
 
-addticket(){
+createticket(){
  if (!this.newticketname.trim() || !this.selectedlist!) return;
  this.selectedlist.tickets.push({
   name:this.newticketname.trim(),
@@ -101,9 +111,10 @@ addticket(){
 
 receiveTicketCreated(ticket: WorkflowTicket)
 {
-    ticket.Id = 1000;
-    alert("Ticket criado com ID " + ticket.Id + " e com o titulo " + ticket.Title);
+    
 }
+
+
 
 teste() {
   this.workflowService.chamaIstoNikita("abc");

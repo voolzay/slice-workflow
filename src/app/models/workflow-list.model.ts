@@ -1,5 +1,10 @@
 export interface WorkflowList {
   name: string;
-  tickets: any[]; // или Ticket[]
+  description: string;
+  ProdutoId: string;
+  Id: number;
+  
+
+
 }
 
