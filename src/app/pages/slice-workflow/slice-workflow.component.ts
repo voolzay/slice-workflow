@@ -111,22 +111,11 @@ createticket(){
 
 receiveTicketCreated(ticket: WorkflowTicket)
 {
-<<<<<<< HEAD
     ticket.id = 1000;
     alert("Ticket criado com ID " + ticket.id + " e com o titulo " + ticket.title);
 }
 
 
-=======
-    
-}
-
-
-
-teste() {
-  this.workflowService.chamaIstoNikita("abc");
-}
->>>>>>> 1ec4bf768d567d7f1189d6e2a6980fe9148fc2ce
 
 }
 
