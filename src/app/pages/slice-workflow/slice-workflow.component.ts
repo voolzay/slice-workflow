@@ -5,6 +5,7 @@ import { OrderListModule } from 'primeng/orderlist';
 import { WorkflowList } from '../../models/workflow-list.model';
 import { WorkflowTicket } from '../../models/workflow-ticket.model';
 import { WorkflowService } from '../../services/workflow.service';
+import { ListMembersComponent } from './list-members/list-members.component';
 
 
 @Component({
@@ -29,7 +30,7 @@ selectedlist: any = null;
 list: {
 name: string;
 description: string;
-ProdutoId :string;
+ProdutoId:string;
 tickets:any[];
 }[] = [];
 
@@ -37,7 +38,6 @@ tickets:any[];
 newlistname: string = '';
 NewListDescription: string = "";
 NewListProd: string = "";
-editdialogvisible: any;
 newticketname: string = '';
 
 constructor(private workflowService: WorkflowService) {
@@ -52,9 +52,9 @@ ngOnInit() {
   ];
 
   this.products = [
-    { name: 'SoundCloud', id: '#f0ad4e' },
-    { name: 'Spotify', id: 'RM' },
-    { name: 'Samsung', id: 'LDN' },
+    { name: 'SoundCloud', id: 'SoundCloud' },
+    { name: 'Spotify', id: 'Spotify' },
+    { name: 'Samsung', id: 'Samsung' },
   ];
 }
 
@@ -69,8 +69,8 @@ addlist(){
 
   // enviar dados ao mike
   let list = {} as WorkflowList;
-  list.name = this.newlistname.trim();
-  list.description = this.NewListDescription;
+  list.Name = this.newlistname.trim();
+  list.Description = this.NewListDescription;
   list.ProdutoId = this.NewListProd;
 
   this.workflowService.setList('workflowLists', [list]);
@@ -117,8 +117,54 @@ receiveTicketCreated(ticket: WorkflowTicket)
 
 
 
+/*EDITAR LISTA*/
+listToEdit: any | null = null;      
+editDialogVisible: boolean = false;
+
+editlistname: string = '';
+editlistdesc: string = '';
+
+// открытие диалога редактирования списка
+editList(list: any) {
+  this.listToEdit = list;
+  this.editlistname = list.name;
+  this.editlistdesc = list.description;
+  this.editDialogVisible = true;
 }
 
+// сохранение изменений
+saveEdit() {
+  if (!this.listToEdit) return;
+
+  this.listToEdit.name = this.editlistname;
+  this.listToEdit.description = this.editlistdesc;
+
+  this.editDialogVisible = false;
+  this.listToEdit = null;
+}
+
+// Для удаления
+showdialogRemoveVisible: boolean = false;
+listToRemove: any | null = null; 
+
+// Вызывается при нажатии кнопки DELETR
+confirmRemoveList(list: any) {
+  this.listToRemove = list;
+  this.showdialogRemoveVisible = true;
+}
+
+// Удаляем список
+removeList() {
+  if (!this.listToRemove) return;
+
+  this.list = this.list.filter(list => list !== this.listToRemove);
+
+  this.showdialogRemoveVisible = false;
+  this.listToRemove = null;
+}
+
+
+}
 
 
 

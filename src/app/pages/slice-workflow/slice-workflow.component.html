@@ -7,103 +7,163 @@
     class="btn-animated special-button"
     (click)="showdialog()">
   </button>
-
-  
 </div>
 
 <!-- Диалог создания нового списка -->
-<p-dialog header="Criar nova lista" [(visible)]="listDialogvisible"
- [modal]="true"
- [closable]="false"
- [style]="{width: '25vw'}">
+<p-dialog header="Criar nova lista"
+          [(visible)]="listDialogvisible"
+          [modal]="true"
+          [closable]="false"
+          [style]="{width: '25vw'}">
   <div class="p-fluid">
     <div class="p-field">
       <input class="inputlist" pInputText placeholder="Nome da Lista" [(ngModel)]="newlistname" />
       <input class="inputlist" pInputText placeholder="Descrição da Lista" [(ngModel)]="NewListDescription" />
-      <p-dropdown class = ""
-        [options]="products" 
-        [(ngModel)]="selectedProduct" 
+
+      <p-dropdown
+        [options]="products"
         appendTo="body"
-        placeholder="Select a product" 
+        placeholder="Select a product"
         [(ngModel)]="NewListProd"
-        [editable]="false" 
-        optionLabel="name" 
-        size ="small"/>
-    </div>
-    <div class="dialog-buttons">
-      <p-button label="Cancel" severity="secondary" (onClick)="listDialogvisible=false"></p-button>
-      <p-button label="Save" (onClick)="addlist()"></p-button>
+        optionLabel="name"
+        optionValue="id">
+      </p-dropdown>
+
+      <div class="dialog-buttons">
+        <p-button label="Cancel" severity="secondary" (onClick)="listDialogvisible=false"></p-button>
+        <p-button label="Save" (onClick)="addlist()"></p-button>
+      </div>
     </div>
   </div>
 </p-dialog>
 
 <!-- Список таблиц -->
 <div *ngFor="let list of list" class="list-container">
-<div class="list-header">
-  <h3 class="list-title">{{ list.name }}</h3>
-  <span class="list-description">{{ list.description }}</span>
-  <span class="list-description">{{ list.ProdutoId }}</span>
+  <div class="list-header">
+    <h3 class="list-name">{{ list.name }}</h3>
+    <div class="list-right">
+      <span class="list-description">{{ list.description }}</span>
+      <span class="list-prodid">{{ list.ProdutoId }}</span>
+    </div>
+  </div>
+
+  <!-- Кнопка добавить тикет -->
+  <button pButton icon="pi pi-plus"
+          class="p-button-sm"
+          label="Add Ticket"
+          (click)="showdialogticket(list)">
+  </button>
+
+
+  <!-- Кнопка удаления списка-->
+<div class="remove-btn-container">
+  <button pButton
+          type="button"
+          label="Remove list"
+          icon="pi pi-trash"
+          class="p-button-danger remove-btn"
+          (click)="confirmRemoveList(list)">
+  </button>
 </div>
 
 
+<!-- Диалог подтверждения удаления -->
+<p-dialog
+  header="Apagar Lista"
+  [(visible)]="showdialogRemoveVisible"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '20vw' }">
 
-  
+  <p>Tem certeza de que deseja apagar a lista ?</p>
 
-  <!-- Кнопка добавить тикет -->
-  <button pButton icon="pi pi-plus" class="p-button-sm" label="+"
-    (click)="showdialogticket(list)"></button>
+  <div class="dialog-buttons">
+    <p-button label="Cancel" (onClick)="showdialogRemoveVisible=false"></p-button>
+    <p-button label="Confirm" class="p-button-danger" (onClick)="removeList()"></p-button>
+  </div>
+</p-dialog>
 
-  <!-- tabela dos tickets -->
+  <!-- Кнопка редактирования -->
+  <button class="button-edit" pButton
+          label="Edit"
+          class="btn-size"
+          (click)="editList(list)">
+  </button>
 
+  <!-- Таблица тикетов -->
   <p-table 
-  dragdrop="true" 
-  listStyle="height:auto" 
-  [responsive]="true"
-  [value]="list.tickets"
-   *ngIf="list.tickets.length > 0" 
-   class="p-mt-2">
+    dragdrop="true" 
+    listStyle="height:auto" 
+    [responsive]="true"
+    [value]="list.tickets"
+    *ngIf="list.tickets && list.tickets.length > 0" 
+    class="p-mt-2">
+    
     <ng-template pTemplate="header">
       <tr>
         <th>Ticket</th>
         <th>Status</th>
-        
       </tr>
     </ng-template>
+    
     <ng-template pTemplate="body" let-ticket>
       <tr>
         <td>{{ ticket.name }}</td>
-        <div class="card flex justify-content-center">
-        <p-dropdown
-        [options]="cities" 
-        [(ngModel)]="selectedCity" 
-        appendTo="body"
-        placeholder="Select a City" 
-        [editable]="false" 
-        optionLabel="name" 
-        size ="small"/>
-</div>
+        <td>
+          <p-dropdown
+            [options]="cities"
+            [(ngModel)]="ticket.status"
+            appendTo="body"
+            placeholder="Select a Status"
+            optionLabel="name"
+            optionValue="name">
+          </p-dropdown>
+        </td>
       </tr>
     </ng-template>
   </p-table>
 </div>
 
+<!-- Диалог редактирования списка -->
 
-<!-- Диалог создания нового тикета -->
 
-<p-dialog header="Criar novo ticket"  
-
-  [(visible)]="ticketDialogvisible"
-  [modal]="true"
-  [closable]="true"
-  [style]="{width: '20vw'}">
+<p-dialog header="Editar Lista"
+          [(visible)]="editDialogVisible"
+          [modal]="true"
+          [closable]="true"
+          [style]="{ width: '20vw' }">
   <div class="p-fluid">
-    <!-- <div class="p-field">
-      <input pInputText placeholder="Nome do Ticket" [(ngModel)]="newticketname" />
+    <div class="p-field">
+      <input pInputText
+             class="editlistinput"
+             placeholder="Novo nome da Lista"
+             [(ngModel)]="editlistname" />
+
+      <input pInputText
+             class="editlistinput"
+             placeholder="Nova descrição da Lista"
+             [(ngModel)]="editlistdesc" />
+
+      <div class="dialog-buttons">
+        <p-button label="Cancel" (onClick)="editDialogVisible=false"></p-button>
+        <p-button label="Save" (onClick)="saveEdit()"></p-button>
+      </div>
     </div>
-    <div class="dialog-buttons">
-      <p-button label="Cancel" (onClick)="ticketDialogvisible=false"></p-button>
-      <p-button label="Save" (onClick)="addticket()"></p-button>
-    </div> -->
-    <app-create-ticket (notify)="receiveTicketCreated($event)"></app-create-ticket>
   </div>
 </p-dialog>
+
+<!-- Диалог создания нового тикета -->
+<p-dialog header="Criar novo ticket"
+          [(visible)]="ticketDialogvisible"
+          [modal]="true"
+          [closable]="true"
+          [style]="{width: '20vw'}">
+  <div class="p-fluid">
+    <app-create-ticket (notify)="receiveTicketCreated($event)"></app-create-ticket>
+  </div>
+
+
+
+</p-dialog>
+
+

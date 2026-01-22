@@ -1,9 +1,7 @@
 export interface WorkflowList {
-  name: string;
-  description: string;
+  Name: string;
+  Description: string;
   ProdutoId: string;
   Id: number;
- 
- 
  
 }

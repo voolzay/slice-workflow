@@ -109,8 +109,8 @@ generateId(): number {
     ...lists[index],
 
     //  Замінюємо лише ті поля, які дозволено редагувати
-    name: updatedList.name,               // нова назва списку
-    description: updatedList.description, // новий опис
+    Name: updatedList.Name,               // нова назва списку
+    Description: updatedList.Description, // новий опис
     ProdutoId: updatedList.ProdutoId          // новий продукт
   };
 

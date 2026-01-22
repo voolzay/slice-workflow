@@ -32,7 +32,8 @@ import { ListMembersComponent } from './list-members/list-members.component';   
     DialogModule,
     TableModule,
     DropdownModule,
-    ToastModule
+    ToastModule,
+    InputTextModule
 ]
   
 })
