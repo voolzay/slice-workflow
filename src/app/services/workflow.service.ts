@@ -1,129 +1,179 @@
+// Імпорт декоратора Injectable з Angular core
+// Він дозволяє використовувати цей клас як сервіс
 import { Injectable } from '@angular/core';
+ 
+// Імпорт моделі WorkflowList
+// Це тип даних одного списку workflow
 import { WorkflowList } from '../models/workflow-list.model';
-
+ 
+// Декоратор, який говорить Angular,
+// що цей клас є сервісом
 @Injectable({
-  providedIn: 'root' // сервіс доступний у всьому застосунку
+  // providedIn: 'root' означає:
+  // сервіс створюється ОДИН раз
+  // і доступний у всьому застосунку
+  providedIn: 'root'
 })
 export class WorkflowService {
-
-  constructor() { }
-
-  // Ключ, під яким у localStorage зберігається останній використаний ID
-// readonly — значення не можна змінити після ініціалізації
-// private — доступний лише всередині цього сервісу
-private readonly ID_KEY = 'workflow_last_id';
-
-/**
- * Генерує унікальний числовий ID
- * Працює для list / ticket / task
- * Кожен новий виклик повертає нове число
- */
-generateId(): number {
-
-  // Отримуємо останній збережений ID з localStorage
-  // localStorage.getItem() повертає string або null
-  // Number(...) перетворює значення у число
-  // Якщо в localStorage ще нічого немає → беремо 0
-  const lastId = Number(localStorage.getItem(this.ID_KEY)) || 0;
-
-  // Створюємо новий ID, збільшуючи попередній на 1
-  // Таким чином ID завжди унікальний
-  const newId = lastId + 1;
-
-  // Зберігаємо новий ID назад у localStorage
-  // щоб наступний виклик починав саме з нього
-  localStorage.setItem(this.ID_KEY, newId.toString());
-
-  // Повертаємо новий унікальний ID
-  return newId;
-}
-
+ 
+  // Конструктор сервісу
+  // Тут нічого не інжектимо, тому він порожній
+  constructor() {}
+ 
+  // КОНСТАНТИ
+ 
+  // ЄДИНИЙ ключ для збереження ВСЬОГО workflow у localStorage
+  // private — доступний тільки всередині сервісу
+  // readonly — значення не можна змінити після ініціалізації
+  private readonly STORAGE_KEY = 'workflowLists';
+ 
+  // Ключ для збереження останнього використаного ID
+  // Використовується для генерації унікальних ID
+  private readonly ID_KEY = 'workflow_last_id';
+ 
+  // ID GENERATOR
+ 
   /**
-   * Зберігає масив WorkflowList у localStorage
-   *  id ключ, під яким дані будуть збережені
-   *  value масив списків workflow
+   * Генерує унікальний числовий ID
+   * Використовується для lists / tickets / tasks
    */
-  setList(id: string, value: WorkflowList[]): void {
+  generateId(): number {
+ 
+    // Отримуємо останній ID з localStorage
+    // localStorage.getItem() повертає string або null
+    // Number(...) перетворює значення в number
+    // Якщо значення null → буде 0
+    const lastId = Number(localStorage.getItem(this.ID_KEY)) || 0;
+ 
+    // Створюємо новий ID, збільшуючи попередній на 1
+    const newId = lastId + 1;
+ 
+    // Зберігаємо новий ID у localStorage
+    // щоб наступний ID був унікальний
+    localStorage.setItem(this.ID_KEY, newId.toString());
+ 
+    // Повертаємо новий ID
+    return newId;
+  }
+ 
+  // READ
+ 
+  /**
+   * Отримує ВСІ workflow lists з localStorage
+   * @returns масив WorkflowList
+   */
+  getLists(): WorkflowList[] {
     try {
-      // Перетворюємо об'єкт у JSON-рядок і зберігаємо в localStorage
-      localStorage.setItem(id, JSON.stringify(value));
+      // Читаємо JSON-рядок з localStorage за ключем STORAGE_KEY
+      const data = localStorage.getItem(this.STORAGE_KEY);
+ 
+      // Якщо дані існують:
+      // JSON.parse перетворює рядок у масив обʼєктів
+      // Якщо даних немає — повертаємо порожній масив
+      return data ? JSON.parse(data) : [];
     } catch (error) {
-      // Обробка помилки, якщо localStorage недоступний або переповнений
-      console.error('Erro ao guardar no localStorage', error);
+      // Якщо сталася помилка парсингу JSON
+      console.error('Erro ao ler localStorage', error);
+ 
+      // Повертаємо порожній масив,
+      // щоб застосунок не впав
+      return [];
     }
   }
-
+ 
+  // SAVE (PRIVATE)
+ 
   /**
-   * Отримує масив WorkflowList з localStorage
-   * @param id ключ, за яким збережені дані
-   * @returns масив WorkflowList або null, якщо дані відсутні
+   * Зберігає ВСІ workflow lists у localStorage
+   * private — використовується тільки всередині сервісу
    */
-  getList(id: string): WorkflowList[] | null {
+  saveLists(lists: WorkflowList[]): void {
     try {
-      // Отримуємо рядок з localStorage
-      const value = localStorage.getItem(id);
-
-      // Якщо дані існують — парсимо JSON у об'єкт
-      return value ? JSON.parse(value) : null;
+      // JSON.stringify перетворює масив обʼєктів у рядок
+      // localStorage може зберігати ТІЛЬКИ рядки
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(lists));
     } catch (error) {
-      // Обробка помилки парсингу JSON
-      console.error('Erro ao ler de localStorage', error);
-      return null;
+      // Помилка може виникнути, якщо localStorage переповнений
+      console.error('Erro ao guardar localStorage', error);
     }
   }
-
+ 
+  // CREATE
+ 
   /**
-   * Видаляє конкретний елемент з localStorage за ключем
-   * @param id ключ елемента для видалення
+   * Додає новий workflow list
    */
-  removeList(id: string): void {
-    localStorage.removeItem(id);
+  addList(list: WorkflowList): void {
+ 
+    // Отримуємо поточний масив списків
+    const lists = this.getLists();
+ 
+    // Додаємо новий список у масив
+    lists.push(list);
+ 
+    // Зберігаємо оновлений масив назад у localStorage
+    this.saveLists(lists);
   }
+ 
+  // ============================
+  // UPDATE
+  // ============================
+ 
+  /**
+   * Редагує існуючий workflow list
+   */
   editList(updatedList: WorkflowList): void {
-
-  // 1 Отримуємо всі workflow-списки з localStorage
-  // Метод getList читає дані за ключем 'workflowLists'
-  // і повертає масив WorkflowList або null
-  const lists = this.getList('workflowLists');
-
-  // 2 Перевіряємо, чи списки взагалі існують
-  // Якщо localStorage порожній або ключа немає — виходимо з методу
-  if (!lists) return;
-
-  // 3 Шукаємо індекс списку, який потрібно відредагувати
-  // findIndex проходить по всьому масиву
-  // і повертає індекс елемента, в якого id співпадає з updatedList.id
-  const index = lists.findIndex(l => l.Id === updatedList.Id);
-
-  // 4 Якщо findIndex повернув -1,
-  // це означає, що список з таким id не знайдено
-  // у цьому випадку нічого не робимо і виходимо
-  if (index === -1) return;
-
-  // 5 Оновлюємо знайдений список
-  // Створюємо новий обʼєкт замість прямої мутації
-  lists[index] = {
-
-    // Копіюємо всі старі властивості списку
-    // (особливо tickets, щоб вони не загубилися)
-    ...lists[index],
-
-    //  Замінюємо лише ті поля, які дозволено редагувати
-    Name: updatedList.Name,               // нова назва списку
-    Description: updatedList.Description, // новий опис
-    ProdutoId: updatedList.ProdutoId          // новий продукт
-  };
-
-  // 6 Зберігаємо оновлений масив списків назад у localStorage
-  // setList перетворює масив у JSON і записує його в браузер
-  this.setList('workflowLists', lists);
-}
-
-
-
+ 
+    // Отримуємо всі списки
+    const lists = this.getLists();
+ 
+    // Шукаємо індекс списку з таким самим ID
+    const index = lists.findIndex(l => l.Id === updatedList.Id);
+ 
+    // Якщо список не знайдено — виходимо з методу
+    if (index === -1) return;
+ 
+    // Оновлюємо список
+    // НЕ мутуємо напряму — створюємо новий обʼєкт
+    lists[index] = {
+ 
+      // Копіюємо всі старі дані списку
+      // (tickets, tasks і т.д.)
+      ...lists[index],
+ 
+      // Замінюємо лише редаговані поля
+      Name: updatedList.Name,
+      Description: updatedList.Description,
+      ProdutoId: updatedList.ProdutoId
+    };
+ 
+    // Зберігаємо оновлений масив
+    this.saveLists(lists);
+  }
+ 
+ 
+  // DELETE
+ 
+ 
+  /**
+   * Видаляє workflow list за ID
+   */
+  removeList(id: number): void {
+ 
+    // Фільтруємо масив:
+    // залишаємо тільки ті списки,
+    // ID яких НЕ дорівнює переданому
+    const lists = this.getLists().filter(l => l.Id !== id);
+ 
+    // Зберігаємо новий масив без видаленого елемента
+    this.saveLists(lists);
+  }
+ 
+  // CLEAR
+ 
   /**
    * Повністю очищає localStorage
-   * УВАГА: видаляє ВСІ дані, збережені в браузері для цього сайту
+   * УВАГА: видаляє ВСІ дані сайту
    */
   clear(): void {
     localStorage.clear();

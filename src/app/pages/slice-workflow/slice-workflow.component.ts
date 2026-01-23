@@ -73,9 +73,6 @@ addlist(){
   list.Description = this.NewListDescription;
   list.ProdutoId = this.NewListProd;
 
-  this.workflowService.setList('workflowLists', [list]);
-
-
   this.list.push({
     name: this.newlistname.trim(),
     description: this.NewListDescription,
