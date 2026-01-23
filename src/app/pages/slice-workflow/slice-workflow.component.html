@@ -40,9 +40,9 @@
 <!-- Список таблиц -->
 <div *ngFor="let list of list" class="list-container">
   <div class="list-header">
-    <h3 class="list-name">{{ list.name }}</h3>
+    <h3 class="list-name">{{ list.Name }}</h3>
     <div class="list-right">
-      <span class="list-description">{{ list.description }}</span>
+      <span class="list-description">{{ list.Description }}</span>
       <span class="list-prodid">{{ list.ProdutoId }}</span>
     </div>
   </div>
@@ -70,7 +70,7 @@
 <!-- Диалог подтверждения удаления -->
 <p-dialog
   header="Apagar Lista"
-  [(visible)]="showdialogRemoveVisible"
+  [(visible)]="ShowdialogRemoveVisible"
   [modal]="true"
   [closable]="true"
   [style]="{ width: '20vw' }">
