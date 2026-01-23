@@ -59,8 +59,8 @@
   dragdrop="true" 
   listStyle="height:auto" 
   [responsive]="true"
-  [value]="list.tickets"
-   *ngIf="list.tickets.length > 0" 
+  [value]="list.tickets || []"
+   *ngIf="(list.tickets?.length || 0) > 0">
    class="p-mt-2">
     <ng-template pTemplate="header">
       <tr>
@@ -104,6 +104,6 @@
       <p-button label="Cancel" (onClick)="ticketDialogvisible=false"></p-button>
       <p-button label="Save" (onClick)="addticket()"></p-button>
     </div> -->
-    <app-create-ticket (notify)="receiveTicketCreated($event)"></app-create-ticket>
+    <app-create-ticket></app-create-ticket>
   </div>
 </p-dialog>

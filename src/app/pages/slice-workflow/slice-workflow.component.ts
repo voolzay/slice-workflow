@@ -1,124 +1,125 @@
-import { Component,  } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { DropdownModule } from 'primeng/dropdown';
-import { OrderListModule } from 'primeng/orderlist';
 import { WorkflowList } from '../../models/workflow-list.model';
 import { WorkflowTicket } from '../../models/workflow-ticket.model';
 import { WorkflowService } from '../../services/workflow.service';
-
 
 @Component({
   selector: 'app-slice-workflow',
   templateUrl: './slice-workflow.component.html',
   styleUrls: ['./slice-workflow.component.scss'],
-  providers: [ConfirmationService, MessageService, DropdownModule,OrderListModule]
+  providers: [ConfirmationService, MessageService]
 })
-export class SliceWorkflowComponent {
+export class SliceWorkflowComponent implements OnInit {
 
-cities: any[] = [];
-selectedCity: any;
+  // Dropdown дані
+  cities: { name: string; code: string; color?: string }[] = [];
+  selectedCity: { name: string; code: string; color?: string } | null = null;
 
-products: any[] = [];
-selectedProduct: any;
+  products: { name: string; id: string }[] = [];
+  selectedProduct: { name: string; id: string } | null = null;
 
+  // Діалоги
+  listDialogvisible: boolean = false;
+  ticketDialogvisible: boolean = false;
+  editdialogvisible: boolean = false;
 
-listDialogvisible: boolean = false;
-ticketDialogvisible: boolean = false;
-selectedlist: any = null;
+  selectedlist: WorkflowList | null = null;
+  list: WorkflowList[] = [];
 
-list: {
-name: string;
-description: string;
-ProdutoId :string;
-tickets:any[];
-}[] = [];
+  // Поля форми
+  newlistname: string = '';
+  NewListDescription: string = '';
+  NewListProd: string = '';
+  newticketname: string = '';
 
+  constructor(private workflowService: WorkflowService) {}
 
-newlistname: string = '';
-NewListDescription: string = "";
-NewListProd: string = "";
-editdialogvisible: any;
-newticketname: string = '';
+  ngOnInit() {
+    // Статуси для dropdown
+    this.cities = [
+      { name: 'IN PROGRESS', code: 'NY', color: '#f0ad4e' },
+      { name: 'TO DO', code: 'RM' },
+      { name: 'DONE', code: 'LDN' },
+    ];
 
-constructor(private workflowService: WorkflowService) {
+    this.products = [
+      { name: 'SoundCloud', id: '#f0ad4e' },
+      { name: 'Spotify', id: 'RM' },
+      { name: 'Samsung', id: 'LDN' },
+    ];
 
+    // Завантаження списків з localStorage
+    // tickets завжди масив, навіть якщо undefined
+    this.list = this.workflowService.getLists().map(list => ({
+      ...list,
+      tickets: list.tickets || []
+    }));
+  }
+
+  // --------------------------
+  // Списки
+  // --------------------------
+  showdialog() {
+    this.listDialogvisible = true;
+  }
+
+  addlist() {
+    if (!this.newlistname.trim()) return;
+
+    const newList: Omit<WorkflowList, 'Id'> = {
+      name: this.newlistname.trim(),
+      description: this.NewListDescription,
+      ProdutoId: this.NewListProd,
+      tickets: [] // завжди масив
+    };
+
+    const savedList = this.workflowService.addList(newList);
+    this.list.push(savedList);
+
+    // очищення полів
+    this.newlistname = '';
+    this.NewListDescription = '';
+    this.NewListProd = '';
+    this.listDialogvisible = false;
+  }
+
+  showdialogticket(list: WorkflowList) {
+    this.selectedlist = list;
+    this.ticketDialogvisible = true;
+  }
+
+  // --------------------------
+  // Тикети
+  // --------------------------
+  createticket() {
+    if (!this.newticketname.trim() || !this.selectedlist) return;
+
+    if (!this.selectedlist.tickets) {
+      this.selectedlist.tickets = [];
+    }
+
+    const newTicket: WorkflowTicket = {
+      id: this.generateTicketId(),
+      Title: this.newticketname.trim(),
+      name: this.newticketname.trim(),
+      status: "TO DO"
+    };
+
+    this.selectedlist.tickets.push(newTicket);
+
+    // Зберігаємо оновлений список у localStorage через сервіс
+    this.workflowService.editList(this.selectedlist);
+
+    // очищення полів
+    this.newticketname = '';
+    this.ticketDialogvisible = false;
+  }
+
+  // --------------------------
+  // Генерація унікального id для тикета
+  // --------------------------
+  generateTicketId(): number {
+    return Math.floor(Math.random() * 1000000);
+  }
 }
-
-ngOnInit() {
-  this.cities = [
-    { name: 'IN PROGRESS', code: 'NY', color: '#f0ad4e' },
-    { name: 'TO DO', code: 'RM' },
-    { name: 'DONE', code: 'LDN' },
-  ];
-
-  this.products = [
-    { name: 'SoundCloud', id: '#f0ad4e' },
-    { name: 'Spotify', id: 'RM' },
-    { name: 'Samsung', id: 'LDN' },
-  ];
-}
-
-
-
-showdialog() {
-  this.listDialogvisible = true;
-}
-
-addlist(){
-  if (!this.newlistname.trim()) return;
-
-  // enviar dados ao mike
-  let list = {} as WorkflowList;
-  list.name = this.newlistname.trim();
-  list.description = this.NewListDescription;
-  list.ProdutoId = this.NewListProd;
-
-  this.workflowService.setList('workflowLists', [list]);
-
-
-  this.list.push({
-    name: this.newlistname.trim(),
-    description: this.NewListDescription,
-    ProdutoId: this.NewListProd,
-    tickets: [],
-  });
-  
-
-  this.newlistname = ""
-  this.NewListDescription = ""
-  this.listDialogvisible = false;
-}
-
-showdialogticket(list : any){
-  this.selectedlist= list;
-  this.ticketDialogvisible = true;
-}
-
-createticket(){
- if (!this.newticketname.trim() || !this.selectedlist!) return;
- this.selectedlist.tickets.push({
-  name:this.newticketname.trim(),
-  status: ""
-
-  
- });
-
- this.newticketname = "";
- this.NewListDescription = "";
- this.ticketDialogvisible = false;
-
-}
-
-receiveTicketCreated(ticket: WorkflowTicket)
-{
-    ticket.id = 1000;
-    alert("Ticket criado com ID " + ticket.id + " e com o titulo " + ticket.Title);
-}
-
-
-
-}
-
-
-
-

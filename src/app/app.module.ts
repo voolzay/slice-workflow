@@ -6,10 +6,18 @@ import { DialogModule } from 'primeng/dialog';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ButtonModule } from 'primeng/button';
+import { TaskCreateComponent } from './pages/slice-workflow/task-create/task-create.component';
+import { TaskEditComponent } from './pages/slice-workflow/task-edit/task-edit.component';
+// app.config.ts або app.module.ts
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+providers: [provideAnimations()]
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TaskCreateComponent,
+    TaskEditComponent
   ],
 imports: [
   BrowserModule,
