@@ -68,8 +68,8 @@ export class SliceWorkflowComponent implements OnInit {
     if (!this.newlistname.trim()) return;
 
     const newList: Omit<WorkflowList, 'Id'> = {
-      name: this.newlistname.trim(),
-      description: this.NewListDescription,
+      Name: this.newlistname.trim(),
+      Description: this.NewListDescription,
       ProdutoId: this.NewListProd,
       tickets: [] // завжди масив
     };

@@ -81,8 +81,8 @@ export class WorkflowService {
  
     lists[index] = {
       ...lists[index],
-      name: updatedList.name,
-      description: updatedList.description,
+      Name: updatedList.Name,
+      Description: updatedList.Description,
       ProdutoId: updatedList.ProdutoId
     };
  
