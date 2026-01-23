@@ -82,6 +82,9 @@
     <p-button label="Confirm" class="p-button-danger" (onClick)="removeList()"></p-button>
   </div>
 </p-dialog>
+<app-list-members></app-list-members>
+<p> Parent Works</p>
+
 
   <!-- Кнопка редактирования -->
   <button class="button-edit" pButton
@@ -90,13 +93,14 @@
           (click)="editList(list)">
   </button>
 
+
   <!-- Таблица тикетов -->
   <p-table 
     dragdrop="true" 
     listStyle="height:auto" 
     [responsive]="true"
-    [value]="list.tickets"
-    *ngIf="list.tickets && list.tickets.length > 0" 
+    [value]="list.tickets || []"
+   *ngIf="(list.tickets?.length || 0) > 0">
     class="p-mt-2">
     
     <ng-template pTemplate="header">
@@ -125,7 +129,6 @@
 </div>
 
 <!-- Диалог редактирования списка -->
-
 
 <p-dialog header="Editar Lista"
           [(visible)]="editDialogVisible"

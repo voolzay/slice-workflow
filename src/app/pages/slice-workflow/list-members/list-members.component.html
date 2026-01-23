@@ -1,1 +1,19 @@
-<p>list-members works!</p>
+
+  <button class="button-edit" pButton
+          label="Add Member"
+          class="btn-size"
+          (click)="addMember()">
+  </button>
+
+<p-dialog  header = add-member
+[(visible)]="ShowDialogMember"
+[modal]="true"
+[closable]="true"
+[style]="{ width: '20vw' }">
+<div class="p-field">
+      <input pInputText
+             class="namemember"
+             placeholder="Novo nome da Lista"
+             />
+
+
