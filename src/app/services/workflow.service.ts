@@ -40,7 +40,7 @@ export class WorkflowService {
   // SAVE (PRIVATE)
   // ============================
  
-  private saveLists(lists: WorkflowList[]): void {
+  saveLists(lists: WorkflowList[]): void {
     try {
       localStorage.setItem(
         this.STORAGE_KEY,
