@@ -3,6 +3,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { WorkflowList } from '../../models/workflow-list.model';
 import { WorkflowTicket } from '../../models/workflow-ticket.model';
 import { WorkflowService } from '../../services/workflow.service';
+import { ListMembersComponent } from './list-members/list-members.component';
 
 @Component({
   selector: 'app-slice-workflow',
@@ -11,6 +12,24 @@ import { WorkflowService } from '../../services/workflow.service';
   providers: [ConfirmationService, MessageService]
 })
 export class SliceWorkflowComponent implements OnInit {
+confirmRemoveList(_t31: WorkflowList) {
+throw new Error('Method not implemented.');
+}
+removeList() {
+throw new Error('Method not implemented.');
+}
+editList(_t31: WorkflowList) {
+throw new Error('Method not implemented.');
+}
+showdialogRemoveVisible: any;
+saveEdit() {
+throw new Error('Method not implemented.');
+}
+editlistname: any;
+editlistdesc: any;
+receiveTicketCreated($event: WorkflowTicket) {
+throw new Error('Method not implemented.');
+}
 
   // Dropdown дані
   cities: { name: string; code: string; color?: string }[] = [];

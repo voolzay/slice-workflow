@@ -16,8 +16,8 @@ providers: [provideAnimations()]
 @NgModule({
   declarations: [
     AppComponent,
-    TaskCreateComponent,
-    TaskEditComponent
+    
+    
   ],
 imports: [
   BrowserModule,

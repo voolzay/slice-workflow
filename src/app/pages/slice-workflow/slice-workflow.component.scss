@@ -27,32 +27,24 @@
 .list-container{
   background-color: rgba(119, 122, 122, 0.089);
   color: black;   
-  padding: 0.25rem 0.5rem; /* меньше отступы */
-  font-size: 0.9rem;      /* меньше текст */
-  width: 60%;
-  margin: 10px auto;
+  padding: 0.25rem 0.9rem; /* меньше отступы */
+  font-size: 1rem;      /* меньше текст */
+  width: 40%;
+  margin: 30px auto;
   
 }
 
 
-.p-mb-3 {
-    background-color: rgba(190, 190, 190, 0.089);
-    color: black;
-    display: flex;
-}
 
 .titlist{
   margin-left: 20px;
   margin-top: 5px;
+  padding: 0.25rem 0.9rem;
+  width: 40%;
+  margin: 30px auto;
 }
 
-.tiny-btn {
-  padding: 0.30rem;
-  font-size: 1rem;
-  text-align: right;
-  width: 28px;
-  height: 28px;
-}
+
 
 
 
@@ -69,17 +61,40 @@
 
 .list-header {
   display: flex;
-  align-items: center;
-  width: 100%;
+  justify-content: space-between; /* Делает пространство между названием и правым блоком */
+  align-items: center;           /* Вертикальное выравнивание по центру */
 }
 
-.list-title {
-  margin: 0;
+.list-right {
+  display: flex;
+  gap: 3rem; /* Расстояние между description и ProdutoId */
 }
 
-.list-description {
-  margin-left: auto;   /* ❗ прижимает к правому краю */
-  color: #5f5f5fc7;
-  font-size: 0.9rem;
-  white-space: nowrap; /* чтобы не переносилось */
+.list-name {
+  margin: 0; /* Убираем стандартные отступы h3 */
+}
+
+.list-description{
+color:rgba(126, 126, 126, 0.76)
+
+}
+.list-prodid {
+  white-space: nowrap; /* Чтобы текст не переносился */
+  color: green;
+  font-weight: bold;     /* жирный */
+  font-size: 16px;       /* размер шрифта */
+  text-transform: uppercase;  /* все буквы заглавные */
+}
+
+
+
+
+.remove-btn-container {
+    display: flex;
+    justify-content: flex-start; /* прижимает содержимое к правому краю */
+    width: 100%;
+}
+
+.button-edit{
+   margin-top: -0.75rem;
 }
