@@ -93,6 +93,24 @@
           (click)="editList(list)">
   </button>
 
+  <button pButton class="p-button-edit" label="Edit"
+    (click)="editListDialogue(list)"></button>
+
+  <p-dialog header = "Editar a Lista" [(visible)]="editListDialogvisible"
+    [modal]="true"
+ [closable]="true"
+ [style]="{width: '25vw'}">
+  <div class="p-fluid">
+    <div class="p-field">
+      <input class="inputlist" pInputText placeholder="Novo nome da Lista" [(ngModel)]="EditListname" />
+      <input class="inputlist" pInputText placeholder="Novs descrição da Lista" [(ngModel)]="EditListDesc" />
+      <div class="dialog-buttons">
+      <p-button label="Cancel" severity="secondary" (onClick)="editListDialogvisible=false"></p-button>
+      <p-button label="Save" (onClick)="saveEdit()"></p-button>
+    </div>
+
+
+  <!-- tabela dos tickets -->
 
   <!-- Таблица тикетов -->
   <p-table 
