@@ -21,6 +21,7 @@ export class SliceWorkflowComponent implements OnInit {
 
   // Діалоги
   listDialogvisible: boolean = false;
+  editListDialogvisible: boolean = false;
   ticketDialogvisible: boolean = false;
   editdialogvisible: boolean = false;
 
@@ -32,6 +33,11 @@ export class SliceWorkflowComponent implements OnInit {
   NewListDescription: string = '';
   NewListProd: string = '';
   newticketname: string = '';
+
+ // Edit formas
+  EditListname: string = "";
+  EditListDesc: string = "";
+
 
   constructor(private workflowService: WorkflowService) {}
 
@@ -89,9 +95,9 @@ export class SliceWorkflowComponent implements OnInit {
     this.ticketDialogvisible = true;
   }
 
-  // --------------------------
+
   // Тикети
-  // --------------------------
+
   createticket() {
     if (!this.newticketname.trim() || !this.selectedlist) return;
 
@@ -116,10 +122,29 @@ export class SliceWorkflowComponent implements OnInit {
     this.ticketDialogvisible = false;
   }
 
-  // --------------------------
+
   // Генерація унікального id для тикета
-  // --------------------------
+  
   generateTicketId(): number {
     return Math.floor(Math.random() * 1000000);
   }
+
+
+  
+editListDialogue(list: WorkflowList) {
+  this.selectedlist = list;
+  this.EditListname = list.Name;
+  this.EditListDesc = list.Description;
+  this.editListDialogvisible = true;
+}
+saveEdit(){
+  if (!this.selectedlist) return;
+
+  this.selectedlist.Name = this.EditListname.trim();
+  this.selectedlist.Description = this.EditListDesc.trim();
+
+  this.workflowService.editList(this.selectedlist);
+
+  this.editListDialogvisible = false;
+}
 }
