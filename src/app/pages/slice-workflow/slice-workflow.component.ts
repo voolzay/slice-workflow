@@ -12,6 +12,24 @@ import { ListMembersComponent } from './list-members/list-members.component';
   providers: [ConfirmationService, MessageService]
 })
 export class SliceWorkflowComponent implements OnInit {
+confirmRemoveList(_t31: WorkflowList) {
+throw new Error('Method not implemented.');
+}
+removeList() {
+throw new Error('Method not implemented.');
+}
+editList(_t31: WorkflowList) {
+throw new Error('Method not implemented.');
+}
+showdialogRemoveVisible: any;
+saveEdit() {
+throw new Error('Method not implemented.');
+}
+editlistname: any;
+editlistdesc: any;
+receiveTicketCreated($event: WorkflowTicket) {
+throw new Error('Method not implemented.');
+}
 
   // Dropdown дані
   cities: { name: string; code: string; color?: string }[] = [];

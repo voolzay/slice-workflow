@@ -70,7 +70,7 @@
 <!-- Диалог подтверждения удаления -->
 <p-dialog
   header="Apagar Lista"
-  [(visible)]="ShowdialogRemoveVisible"
+  [(visible)]="showdialogRemoveVisible"
   [modal]="true"
   [closable]="true"
   [style]="{ width: '20vw' }">
@@ -131,7 +131,7 @@
 <!-- Диалог редактирования списка -->
 
 <p-dialog header="Editar Lista"
-          [(visible)]="editDialogVisible"
+          [(visible)]="editdialogvisible"
           [modal]="true"
           [closable]="true"
           [style]="{ width: '20vw' }">
@@ -148,7 +148,7 @@
              [(ngModel)]="editlistdesc" />
 
       <div class="dialog-buttons">
-        <p-button label="Cancel" (onClick)="editDialogVisible=false"></p-button>
+        <p-button label="Cancel" (onClick)="editdialogvisible=false"></p-button>
         <p-button label="Save" (onClick)="saveEdit()"></p-button>
       </div>
     </div>
